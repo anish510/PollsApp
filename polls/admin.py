@@ -1,7 +1,18 @@
 from django.contrib import admin
-from . import models
+from .models import Question,choice
 
 
 # Register your models here.
-admin.site.register(models.Question)
-admin.site.register(models.choice)
+#to put the models in the same admin directory
+
+class ChoiceInlinie(admin.TabularInline):
+    model = choice
+    extra = 3
+    
+class QuestionAdmin(admin.ModelAdmin):
+    
+    list_display = ["question_text", "pub_date"]
+    inlines = [ChoiceInlinie]
+    
+admin.site.register(Question, QuestionAdmin)
+    
